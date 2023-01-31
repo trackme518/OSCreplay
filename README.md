@@ -3,7 +3,7 @@
 ## What is this good for?
 Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can.
 
-![Encoder screenshot](./assets/GUI_thin.jpg)
+![Encoder screenshot](./assets/screenshot1.jpg)
 
 ## Download - OSC replay
 * [MacOS Intelx64](PLACEHOLDER) TBD
