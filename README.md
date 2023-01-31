@@ -22,8 +22,11 @@ After unzipping simply double click the executable to run the app. You will see 
 * CLEAR - clear the status messages
 * PERFORMANCE MODE - disable rendering GUI to speed up the program.
 
+## Setting OSC/Websocket IP & ports
+Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad. 
+
 ## OSC
-ReplayOSC App supports only single messages (no bundles) and Integer, Float, String, Double variable types. App supports multiple variables in single message. 
+ReplayOSC App supports only single messages (no bundles) and Integer, Float, String, Double variable types. App supports multiple variables in a single message. 
 
 ## .CSV file format
 OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App. I am using buffered writer and reader so the file is written or red one line at a time. This is important to avoid out of memory error when reading / wring large files. CSV files uses ',' comma delimeter. First collumn is "timestamp" in milliseconds (Integer). First event is always timestamped as 0 - time before the first event arrive is ignored. Second collumn is "OSCaddress" - it should always start with "/" to comply with OSC protocol. Third collumn is "typetag". Typetag is used to determine how many variables are in the message data - each character represents one variable. Order matters. You can also have empty typetag in case there are no data in the message. Subsequent collumns are individual variables. 
@@ -93,7 +96,11 @@ function sendMessage() {
   obj['data'].push({"type":"s","value":"some text"});
   obj['data'].push({"type":"d","value":16.333});
   var myJSON = JSON.stringify(obj);
-  ws.send(myJSON); //send via websocket
+  if(ws == null){
+  	console.log("Webscoket connection not established");
+  }else{
+  	ws.send(myJSON); //send via websocket
+  }
 }
 </script>
 
