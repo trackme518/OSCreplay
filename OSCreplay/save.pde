@@ -70,7 +70,7 @@ void stopRecEvent() {
 void saveData() {
   JSONObject json = new JSONObject();
   //OSC
-  json.setString("myOscIp", myOscIp);
+
   json.setInt("oscListenPort", oscListenPort);
   json.setString("targetOscIp", targetOscIp);
   json.setInt("oscTargetPort", oscTargetPort);
@@ -98,7 +98,6 @@ void loadData() {
   }
   JSONObject json = loadJSONObject( dataPath(fileName) );
   //OSC
-  myOscIp = json.getString("myOscIp");
   oscListenPort = json.getInt("oscListenPort");
   targetOscIp = json.getString("targetOscIp");
   oscTargetPort = json.getInt("oscTargetPort");

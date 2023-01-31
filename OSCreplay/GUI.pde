@@ -223,7 +223,9 @@ void loopReplay(boolean val) {
 }
 
 void clear() {
-  eventParams = new String[10];
+  eventstatus.clear();
+  //addEventStatus( true, currAddTrimmed, theOscMessage.typetag() );
+  //eventParams = new String[10];
 }
 
 void keyPressed () {
@@ -233,15 +235,3 @@ void keyPressed () {
   }
 }
 //-------------------------------------------
-void displayCommands() {
-  if (replay!= null) {
-    pushStyle();
-    textFont(mediumFont);
-    for (int i=0; i < eventParams.length; i++) {
-      if ( eventParams[i] != null ) {
-        text(eventParams[i], 250, 40+i*30);
-      }
-    }
-    popStyle();
-  }
-}

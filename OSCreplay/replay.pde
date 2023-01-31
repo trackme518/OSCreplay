@@ -2,20 +2,6 @@ Replay replay;
 ArrayList<String>replayFilesAvailable = new ArrayList<String>();
 boolean resaveOnReplay = false; //this for dev purposes only - update variables in files....DELETE IN PRODUCTION!!!
 
-String[] eventParams = new String[10]; //store last 10 send events and display them
-
-void addEventStatus(String newParam) {
-  String[] reorderEventParams = new String[eventParams.length];
-  for (int i=eventParams.length-1; i>-1; i--) {
-    if ( i-1 >=0 ) {
-      reorderEventParams[i] = eventParams[i-1];
-    }
-  }
-  System.arraycopy(reorderEventParams, 0, eventParams, 0, eventParams.length); // <- we need to copy to existing array...
-  eventParams[0] = newParam; //store event to string for debug
-}
-
-
 void initReplay() {
   replay = new Replay();
   replayFilesAvailable = listFiles(".csv");
@@ -43,9 +29,6 @@ class Replay {
   String OSCtypetag = "";
   //---------------------------------------------------------------
   Replay() {
-    for (int i=0; i< eventParams.length; i++) {
-      eventParams[i] = "";
-    }
   }
 
   //main function to read from file, checks against current time and exucte events
@@ -62,15 +45,16 @@ class Replay {
     //--------
     if (playing && eventred) {
       if ( millis() - timer > timestamp) {
+        
         String currAdd = OSCaddress;
         if (currAdd.length()>30) {
           currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
         }
-        String eventStatus = timestamp+" "+currAdd+" "+OSCtypetag; //store event to string for debug
-        addEventStatus(eventStatus);
+        
+        eventstatus.addEventStatus( false, currAdd, OSCtypetag ); //add to debug messages
 
         //SEND EVENTS OVER OSC :-------
-        oscP5.send(myMessage, myRemoteLocation);
+         OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener 
         //------------------------------------------
         readNext = true;
         eventred = false;

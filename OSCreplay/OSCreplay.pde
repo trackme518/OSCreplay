@@ -18,6 +18,7 @@ void setup() {
   }
   initGUI();
   frameRate(maxFrameRate);
+  NetInfo.print();
 }
 
 void draw() {
@@ -27,7 +28,10 @@ void draw() {
 
   if (!performanceMode) {
     background(0);
-    displayCommands();
+    if (eventstatus != null ) {
+      eventstatus.displayEvents(); //see status tab
+    }
+    //displayCommands();
     cp5.draw();
 
     if (performanceModeSet) {

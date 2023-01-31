@@ -2,7 +2,6 @@
   "oscListenPort": 12000,
   "targetOscIp": "127.0.0.1",
   "useWebsocket": true,
-  "myOscIp": "127.0.0.1",
   "websocketPrefix": "/oscutil",
   "websocketPort": 9999,
   "oscTargetPort": 16000,
