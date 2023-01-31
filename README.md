@@ -10,6 +10,8 @@ Ever needed to record OSC events and replay them later? Want to send OSC from cl
 * [Windows64bit](https://github.com/trackme518/OSCreplay/releases/download/v1.0_winX64/windows-amd64.7z)
 * [Linux64bit](PLACEHOLDER) TBD
 
+MacOS and Linux builds will be added later.
+
 Download links provide zipped archive with the tool. You don't need to install anything - just unzip it and run "create_multichannel_audio2.exe" file. In case the links are not working you can also download the encoder directly from Github (click green "Code" button on upper left and select download ZIP).
 
 ## How to use it?
