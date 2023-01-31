@@ -26,7 +26,7 @@ After unzipping simply double click the executable to run the app. You will see 
 Under the hood the tool is programmed in Processing Java to run GUI and OSC and Websocket server. 
 
 ## Websocket
-You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. Websocket messages need to be encoded in JSON format like so:
+You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. Websocket messages need to be encoded in JSON format and send as plain String like so:
 
 ```JSON
 {
@@ -51,6 +51,50 @@ You can send vanilla websocket messages to the app and it will proxy them as pro
   ]
 }
 ```
+In HTML + JavaScript:
+```HTML
+<html>
+<body>
+<button onclick="sendMessage()">Send Message</button>
+
+<script>
+var ws = null;
+
+function connectWebsocket() {
+	if ("WebSocket" in window) {
+		ws = new WebSocket("ws://127.0.0.1:9999/oscutil");
+		ws.onopen = function () {
+			console.log("Connection opened");
+		};
+		
+		ws.onmessage = function (event) {
+		    console.log("Message received: " + event.data);
+		};
+		
+		ws.onclose = function () {
+			console.log("Connection closed");
+		};
+	}
+}
+
+connectWebsocket(); //establish connection to OScreplay App
+
+function sendMessage() {
+  //Prepare Websocket message
+  var obj = { "address":"/someoscaddress", "data":[] };
+  obj['data'].push({"type":"i","value":16});
+  obj['data'].push({"type":"f","value":16.333});
+  obj['data'].push({"type":"s","value":"some text"});
+  obj['data'].push({"type":"d","value":16.333});
+  var myJSON = JSON.stringify(obj);
+  ws.send(myJSON); //send via websocket
+}
+</script>
+
+</body>
+</html>
+```
+
 Permissible types:
 * 'i' Integer
 * 'f' Float
