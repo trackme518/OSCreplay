@@ -141,6 +141,16 @@ Permissible types:
 * s String
 * d Double
 
+### Control OSCReplay remotely without GUI
+You can also control the OSCReplay App with OSC or Websockets messages:
+* "/oscutil_recording" - Integer 0 or 1 - trigger or end recording incoming messages into .CSV file.
+* "/oscutil_play" - Integer 0 or 1 - start or stop replay from .CSV file (select the file to play first)
+* "/oscutil_loop" - Integer 0 or 1 - set the replay to loop or play once
+* "/oscutil_performance" - Integer 0 or 1 - enter or end performance mode
+* "/oscutil_file" - Integer 0 to Infinity - select index of the file for replay
+* "/oscutil_listfiles" - no values - This will return names of avaliable replay files as String with ';' delimeter
+* "/oscutil_countfiles" - no values - This will return Integer with count of avaliable .CSV replay files.
+
 ### Windows
 Tested on Windows 10. It should work out of the box. Just double click the "create_multichannel_audio2.exe" file. If you are using antivirus such as Windows Defender it will show warning - you can safely click "More info" and choose "Run anyway". Next time it should run without warning.
 
