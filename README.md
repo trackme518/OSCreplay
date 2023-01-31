@@ -24,7 +24,7 @@ After unzipping simply double click the executable to run the app. You will see 
 * CLEAR - clear the status messages
 * PERFORMANCE MODE - disable rendering GUI to speed up the program.
 
-Displayed status messages are for debug - yellow ones are outgoing messages from replay. Green messages are incoming messages. Address pattern and typetag are printed. You can see last 10 messages. In performance mode no messages are being displayed to save performance. 
+Displayed status messages are for debug - yellow ones are outgoing messages from replay. Green messages are incoming messages. Address pattern and typetag are printed. You can see last 10 messages. In performance mode no messages are being displayed to increase performance. 
 
 ## Setting OSC/Websocket IP, ports & more
 Beside GUI there are more settings. Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad.
