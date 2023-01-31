@@ -1,5 +1,6 @@
 //TBD rename adress patterns (from settings like in touchdesigner chan1 chan2 ...)
 //TBD remap values?
+//TBD error on cwebsocket connection timeout
 
 boolean performanceMode = false;
 boolean performanceModeSet = false;
