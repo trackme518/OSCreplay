@@ -22,8 +22,28 @@ After unzipping simply double click the executable to run the app. You will see 
 * CLEAR - clear the status messages
 * PERFORMANCE MODE - disable rendering GUI to speed up the program.
 
-## Setting OSC/Websocket IP & ports
-Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad. 
+## Setting OSC/Websocket IP, ports & more
+Beside GUI there are more settings. Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad.
+```JSON
+{
+  "oscListenPort": 12000,
+  "targetOscIp": "127.0.0.1",
+  "useWebsocket": true,
+  "myOscIp": "127.0.0.1",
+  "websocketPrefix": "/oscutil",
+  "websocketPort": 9999,
+  "oscTargetPort": 16000,
+  "maxFrameRate": 1000
+}
+```
+* "oscListenPort": Integer - port where the App is listening for OSC commands (to control GUI remotely)
+* "targetOscIp": String - IP where to send OSC commands
+* "useWebsocket": Boolean - whether to use Websocket proxy
+* "myOscIp": String - local IP where the App is listening for commands (to control GUI remotely)
+* "websocketPrefix": String - Websocket server address
+* "websocketPort": Integer - Websocket port - please note that firewall or your web browser might allow only certain ranges of ports, also some Apps such as TeamViewer might be already using some ports
+* "oscTargetPort": Integer - where to send OSC commands, note that some apps might be already using some ports
+* "maxFrameRate": Integre - set max framerate at which the App will try to run - 120 should be enough. This will influence performance and your PC reasources.
 
 ## OSC
 ReplayOSC App supports only single messages (no bundles) and Integer, Float, String, Double variable types. App supports multiple variables in a single message. 
