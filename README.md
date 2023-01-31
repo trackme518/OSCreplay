@@ -38,7 +38,7 @@ Under the hood the tool is programmed in Java to run GUI and OSC and Websocket s
 ## Websocket
 You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. Websocket messages need to be encoded in JSON format like so:
 
-'''
+```Java
 {
   "address": "/sometarget",
   "data": [
@@ -60,7 +60,8 @@ You can send vanilla websocket messages to the app and it will proxy them as pro
     }
   ]
 }
-'''
+end
+```
 
 ## License
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International. Please refer to the [license](./license/by-nc-sa.md). Author is not liable for any damage caused by the software. Usage of the software is completely at your own risk. For commercial licensing please [https://tricktheear.eu/contact/](contact) us.   
