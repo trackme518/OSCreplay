@@ -38,7 +38,7 @@ Under the hood the tool is programmed in Java to run GUI and OSC and Websocket s
 ## Websocket
 You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. Websocket messages need to be encoded in JSON format like so:
 
-```Java
+```JSON
 {
   "address": "/sometarget",
   "data": [
