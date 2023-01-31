@@ -1,5 +1,4 @@
-//TBD websocket parser
-//TBD renmae adress patterns (from settings like in touchdesigner chan1 chan2 ...)
+//TBD rename adress patterns (from settings like in touchdesigner chan1 chan2 ...)
 //TBD remap values?
 
 boolean performanceMode = false;
@@ -13,11 +12,9 @@ void setup() {
   loadData(); //load user data
   initOSCAPI();
   initReplay(); //see replay tab - playback events from CSV file
-
   if (useWebsocket) {
     initWebsocket();
   }
-
   initGUI();
   frameRate(maxFrameRate);
 }
@@ -39,15 +36,6 @@ void draw() {
     if (!performanceModeSet) {
       renderPerformanceModeHint(); //see GUI tab
       performanceModeSet = true;
-      /*
-      String hint = "Press 'F' to turn off performance mode";
-       background(0);
-       pushStyle();
-       textFont(mediumFont);
-       text(hint,width/2-textWidth(hint)/2, height/2-12);
-       performanceModeSet = true;
-       popStyle();
-       */
     }
   }
 

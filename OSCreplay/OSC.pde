@@ -24,7 +24,7 @@ void oscEvent(OscMessage theOscMessage) {
     currAddTrimmed = theOscMessage.addrPattern().substring(0, 30);
   }
   String eventStatus = str(millis())+" "+currAddTrimmed+" "+theOscMessage.typetag(); //store event to string for debug
-  println(eventStatus);
+  //println(eventStatus);
   addEventStatus(eventStatus);
   saveEvent( theOscMessage );
 

@@ -4,6 +4,7 @@
   "useWebsocket": true,
   "myOscIp": "127.0.0.1",
   "websocketPrefix": "/oscutil",
-  "oscTargetPort": 9999,
+  "websocketPort": 9999,
+  "oscTargetPort": 16000,
   "maxFrameRate": 1000
 }

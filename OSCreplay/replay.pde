@@ -62,7 +62,10 @@ class Replay {
     //--------
     if (playing && eventred) {
       if ( millis() - timer > timestamp) {
-        String currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
+        String currAdd = OSCaddress;
+        if (currAdd.length()>30) {
+          currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
+        }
         String eventStatus = timestamp+" "+currAdd+" "+OSCtypetag; //store event to string for debug
         addEventStatus(eventStatus);
 
@@ -121,6 +124,9 @@ class Replay {
           }
           if ( currType.equals('s') ) {
             myMessage.add( (String)pieces[i+3] );
+          }
+          if ( currType.equals('d') ) {
+            myMessage.add( Double.valueOf(pieces[i+3]) ); //cast to double
           }
         }
         //println("line typetag: "+OSCtypetag+" address: "+OSCaddress);

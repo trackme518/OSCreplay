@@ -34,6 +34,9 @@ void saveEvent( OscMessage msg ) {
       if ( currType.equals('s') ) {
         record+= msg.get(i).stringValue() +",";
       }
+      if ( currType.equals('d') ) {
+        record+= String.valueOf( msg.get(i).doubleValue() ) +","; //cast double to string
+      }
     }
 
     record = record.substring(0, record.length()-1);//trim last comma
@@ -72,7 +75,7 @@ void saveData() {
   json.setString("targetOscIp", targetOscIp);
   json.setInt("oscTargetPort", oscTargetPort);
   //Websocket
-  json.setInt("oscTargetPort", websocketPort);
+  json.setInt("websocketPort", websocketPort);
   json.setString("websocketPrefix", websocketPrefix);
   json.setBoolean("useWebsocket", useWebsocket);
   //GUI
@@ -101,7 +104,7 @@ void loadData() {
   oscTargetPort = json.getInt("oscTargetPort");
   maxFrameRate = json.getInt("maxFrameRate");
   //Websocket
-  websocketPort = json.getInt("oscTargetPort");
+  websocketPort = json.getInt("websocketPort");
   websocketPrefix = json.getString("websocketPrefix");
   useWebsocket = json.getBoolean("useWebsocket");
 
