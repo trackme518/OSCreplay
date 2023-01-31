@@ -142,7 +142,7 @@ Permissible types:
 * d Double
 
 ### Control OSCReplay remotely without GUI
-You can also control the OSCReplay App with OSC or Websockets messages:
+You can also control the OSCReplay App with OSC or Websockets messages. Below see the list of "address pattern" - permissible value and type - description.
 * "/oscutil_recording" - Integer 0 or 1 - trigger or end recording incoming messages into .CSV file.
 * "/oscutil_play" - Integer 0 or 1 - start or stop replay from .CSV file (select the file to play first)
 * "/oscutil_loop" - Integer 0 or 1 - set the replay to loop or play once
