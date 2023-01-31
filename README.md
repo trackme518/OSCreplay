@@ -22,11 +22,14 @@ After unzipping simply double click the executable to run the app. You will see 
 * CLEAR - clear the status messages
 * PERFORMANCE MODE - disable rendering GUI to speed up the program.
 
+## .CSV file format
+OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App. I am using buffered writer and reader so the file is written or red one line at a time. This is important to avoid out of memory error when reading / wring latge files. CSV files uses ',' comma delimeter. First collumn is "timestamp" in milliseconds (Integer). First event is always timestamped as 0 - time before the first event arrive is ignored. Second collumn is "OSCaddress" - it should always start with "/" to comply with OSC protocol. Third collumn is "typetag". Typetag is used to determine how many variables are in the message data - each character represents one variable. Order matters. Subsequent collumns are individual variables. 
+
 ## How does it work?
 Under the hood the tool is programmed in Processing Java to run GUI and OSC and Websocket server. 
 
 ## Websocket
-You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. Websocket messages need to be encoded in JSON format and send as plain String like so:
+You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. You can also save them into .CSV file and send them as OSC later. Websocket messages need to be encoded in JSON format and send as plain String like so:
 
 ```JSON
 {
