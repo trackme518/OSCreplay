@@ -22,8 +22,11 @@ After unzipping simply double click the executable to run the app. You will see 
 * CLEAR - clear the status messages
 * PERFORMANCE MODE - disable rendering GUI to speed up the program.
 
+## OSC
+ReplayOSC App supports only single messages (no bundles) and Integer, Float, String, Double variable types. App supports multiple variables in single message. 
+
 ## .CSV file format
-OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App. I am using buffered writer and reader so the file is written or red one line at a time. This is important to avoid out of memory error when reading / wring latge files. CSV files uses ',' comma delimeter. First collumn is "timestamp" in milliseconds (Integer). First event is always timestamped as 0 - time before the first event arrive is ignored. Second collumn is "OSCaddress" - it should always start with "/" to comply with OSC protocol. Third collumn is "typetag". Typetag is used to determine how many variables are in the message data - each character represents one variable. Order matters. Subsequent collumns are individual variables. 
+OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App. I am using buffered writer and reader so the file is written or red one line at a time. This is important to avoid out of memory error when reading / wring large files. CSV files uses ',' comma delimeter. First collumn is "timestamp" in milliseconds (Integer). First event is always timestamped as 0 - time before the first event arrive is ignored. Second collumn is "OSCaddress" - it should always start with "/" to comply with OSC protocol. Third collumn is "typetag". Typetag is used to determine how many variables are in the message data - each character represents one variable. Order matters. You can also have empty typetag in case there are no data in the message. Subsequent collumns are individual variables. 
 
 ## How does it work?
 Under the hood the tool is programmed in Processing Java to run GUI and OSC and Websocket server. 
