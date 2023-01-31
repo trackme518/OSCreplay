@@ -60,7 +60,6 @@ You can send vanilla websocket messages to the app and it will proxy them as pro
     }
   ]
 }
-end
 ```
 
 ## License
