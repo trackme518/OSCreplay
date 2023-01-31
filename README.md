@@ -99,10 +99,10 @@ function sendMessage() {
 ```
 
 Permissible types:
-* 'i' Integer
-* 'f' Float
-* 's' String
-* 'd' Double
+* i Integer
+* f Float
+* s String
+* d Double
 
 ### Windows
 Tested on Windows 10. It should work out of the box. Just double click the "create_multichannel_audio2.exe" file. If you are using antivirus such as Windows Defender it will show warning - you can safely click "More info" and choose "Run anyway". Next time it should run without warning.
