@@ -43,7 +43,7 @@ Beside GUI there are more settings. Go into the data folder inside the OSCReplay
 * "websocketPrefix": String - Websocket server address
 * "websocketPort": Integer - Websocket port - please note that firewall or your web browser might allow only certain ranges of ports, also some Apps such as TeamViewer might be already using some ports
 * "oscTargetPort": Integer - where to send OSC commands, note that some apps might be already using some ports
-* "maxFrameRate": Integre - set max framerate at which the App will try to run - 120 should be enough. This will influence performance and your PC reasources.
+* "maxFrameRate": Integer - set max framerate at which the App will try to run - 120 should be enough. This will influence performance and your PC reasources.
 
 ## OSC
 ReplayOSC App supports only single messages (no bundles) and Integer, Float, String, Double variable types. App supports multiple variables in a single message. 
