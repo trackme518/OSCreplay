@@ -12,7 +12,7 @@ Ever needed to record OSC events and replay them later? Want to send OSC from cl
 
 MacOS and Linux builds will be added later.
 
-Download links provide zipped archive with the tool. You don't need to install anything - just unzip it and run "create_multichannel_audio2.exe" file. In case the links are not working you can also download the encoder directly from Github (click green "Code" button on upper left and select download ZIP).
+Download links provide zipped archive with the tool. You don't need to install anything - just unzip it and run "OSCReplay.exe" file.
 
 ## How to use it?
 After unzipping simply double click the executable to run the app. You will see a window with GUI. 
