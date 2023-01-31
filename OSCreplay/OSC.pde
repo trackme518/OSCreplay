@@ -6,7 +6,7 @@ NetAddress otherServerLocation;
 
 String targetOscIp  ="127.0.0.1";
 //String myOscIp  ="127.0.0.1";
-//int myOscPort = 
+//int myOscPort =
 int oscListenPort = 12000;
 int oscTargetPort = 16000;
 
@@ -30,7 +30,9 @@ void oscEvent(OscMessage theOscMessage) {
     currAddTrimmed = theOscMessage.addrPattern().substring(0, 30);
   }
 
-  eventstatus.addEventStatus( true, currAddTrimmed, theOscMessage.typetag() );
+  if (!performanceModeSet) {
+    eventstatus.addEventStatus( true, currAddTrimmed, theOscMessage.typetag() );
+  }
 
   //save only OSC not ment to control GUI
   if ( !theOscMessage.addrPattern().contains("/oscutil") ) {

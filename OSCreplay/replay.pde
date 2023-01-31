@@ -45,16 +45,18 @@ class Replay {
     //--------
     if (playing && eventred) {
       if ( millis() - timer > timestamp) {
-        
+
         String currAdd = OSCaddress;
         if (currAdd.length()>30) {
           currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
         }
-        
-        eventstatus.addEventStatus( false, currAdd, OSCtypetag ); //add to debug messages
+
+        if (!performanceModeSet) {
+          eventstatus.addEventStatus( false, currAdd, OSCtypetag ); //add to debug messages
+        }
 
         //SEND EVENTS OVER OSC :-------
-         OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener 
+        OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
         //------------------------------------------
         readNext = true;
         eventred = false;

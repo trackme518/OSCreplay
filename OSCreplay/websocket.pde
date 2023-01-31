@@ -113,6 +113,9 @@ void webSocketServerEvent(String msg) {
       }
     }
     oscP5.flush(currmsg, otherServerLocation); //send without sending to OSCevent
-    eventstatus.addEventStatus( true, currmsg.addrPattern(), currmsg.typetag() ); //add to debug messages
+    
+    if (!performanceModeSet) {
+      eventstatus.addEventStatus( true, currmsg.addrPattern(), currmsg.typetag() ); //add to debug messages
+    }
   }//end check parameter address exists
 }
