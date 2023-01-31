@@ -43,8 +43,6 @@ Beside GUI there are more settings. Go into the data folder inside the OSCReplay
 * "oscListenPort": Integer - port where the App is listening for OSC commands (to control GUI remotely)
 * "targetOscIp": String - IP where to send OSC commands
 * "useWebsocket": Boolean - whether to use Websocket proxy
-* "myOscIp": String - local IP where the App is listening for commands (to control GUI remotely)
-* "websocketPrefix": String - Websocket server address
 * "websocketPort": Integer - Websocket port - please note that firewall or your web browser might allow only certain ranges of ports, also some Apps such as TeamViewer might be already using some ports
 * "oscTargetPort": Integer - where to send OSC commands, note that some apps might be already using some ports
 * "maxFrameRate": Integer - set max framerate at which the App will try to run - 120 should be enough. This will influence performance and your PC reasources.
