@@ -7,7 +7,7 @@ Ever needed to record OSC events and replay them later? Want to send OSC from cl
 
 ## Download - OSC replay
 * [MacOS Intelx64](PLACEHOLDER) TBD
-* [Windows64bit](https://github.com/trackme518/Sonification-of-a-juggling-performance-using-spatial-audio---Physical-based-rhytm-generator/releases/download/v3.0win64/lightbetas_v30_windows-amd64.7z)
+* [Windows64bit](https://github.com/trackme518/OSCreplay/releases/download/v1.0_winX64/windows-amd64.7z)
 * [Linux64bit](PLACEHOLDER) TBD
 
 Download links provide zipped archive with the tool. You don't need to install anything - just unzip it and run "create_multichannel_audio2.exe" file. In case the links are not working you can also download the encoder directly from Github (click green "Code" button on upper left and select download ZIP).
