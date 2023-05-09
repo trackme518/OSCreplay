@@ -1,7 +1,7 @@
 # OSCreplay
 
 ## What is this good for?
-Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can.
+Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. 
 
 ![Encoder screenshot](./assets/screenshot1.jpg)
 
