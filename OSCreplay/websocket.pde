@@ -112,7 +112,8 @@ void webSocketServerEvent(String msg) {
         }
       }
     }
-    oscP5.flush(currmsg, otherServerLocation); //send without sending to OSCevent
+    
+    OscP5.flush(currmsg, otherServerLocation); //send without sending to OSCevent
     
     if (!performanceModeSet) {
       eventstatus.addEventStatus( true, currmsg.addrPattern(), currmsg.typetag() ); //add to debug messages
