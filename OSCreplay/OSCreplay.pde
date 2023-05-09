@@ -8,6 +8,7 @@ int maxFrameRate = 1000;
 float avgFps = 0.0;
 
 void setup() {
+  //size(640, 480);
   size(640, 480, P2D);
   surface.setTitle("OSC REPLAY ");
   loadData(); //load user data
