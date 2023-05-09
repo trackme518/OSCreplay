@@ -28,12 +28,18 @@ class EventStatus {
     textFont(mediumFont);
     for (int i=0; i < events.length; i++) {
       if ( events[i] != null ) {
-        if ( events[i].in ) { // incoming message
-          fill(204, 255, 204);
-        } else {
-          fill(255, 255, 204);
+        try {
+          if ( events[i].in ) { // incoming message
+            fill(204, 255, 204);
+          } else {
+            fill(255, 255, 204);
+          }
+          if ( events[i] != null ) {
+            text(events[i].addr+" "+events[i].typetag, 250, 40+i*30);
+          }
+        }catch(Exception e) {
+          println(e);
         }
-        text(events[i].addr+" "+events[i].typetag, 250, 40+i*30);
       }
     }
     popStyle();

@@ -78,6 +78,8 @@ void saveData() {
   json.setInt("websocketPort", websocketPort);
   json.setString("websocketPrefix", websocketPrefix);
   json.setBoolean("useWebsocket", useWebsocket);
+  json.setBoolean("proxyEnabled", proxyEnabled);
+
   //GUI
   json.setInt("maxFrameRate", maxFrameRate);
   saveJSONObject(json, dataPath("settings.json") );
@@ -106,6 +108,6 @@ void loadData() {
   websocketPort = json.getInt("websocketPort");
   websocketPrefix = json.getString("websocketPrefix");
   useWebsocket = json.getBoolean("useWebsocket");
-
+  proxyEnabled = json.getBoolean("proxyEnabled");
   println("settings loaded");
 }

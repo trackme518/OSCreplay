@@ -1,9 +1,10 @@
 {
-  "oscListenPort": 12000,
-  "targetOscIp": "127.0.0.1",
+  "proxyEnabled": true,
+  "oscListenPort": 7777,
+  "targetOscIp": "localhost",
   "useWebsocket": true,
   "websocketPrefix": "/oscutil",
   "websocketPort": 9999,
-  "oscTargetPort": 16000,
+  "oscTargetPort": 8888,
   "maxFrameRate": 1000
 }

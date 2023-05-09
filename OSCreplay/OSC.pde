@@ -10,6 +10,7 @@ String targetOscIp  ="127.0.0.1";
 int oscListenPort = 12000;
 int oscTargetPort = 16000;
 
+boolean proxyEnabled = false;
 //MyOSCAgent oscListener;
 //MyOSCAgent oscSender;
 
@@ -34,11 +35,19 @@ void oscEvent(OscMessage theOscMessage) {
     eventstatus.addEventStatus( true, currAddTrimmed, theOscMessage.typetag() );
   }
 
+
   //save only OSC not ment to control GUI
   if ( !theOscMessage.addrPattern().contains("/oscutil") ) {
+    //resend all incoming OSC messages to remote target - act as a proxy
+    if (proxyEnabled) {
+      oscP5.send(theOscMessage, otherServerLocation);
+    }
+
     saveEvent( theOscMessage );
     return;
   }
+
+  //---------------------------------------------------------------------------------
 
   //CONTROL GUI REMOTELY---------------------------------------------------------------
   if ( theOscMessage.checkAddrPattern("/oscutil_recording") &&  theOscMessage.checkTypetag("i") ) {

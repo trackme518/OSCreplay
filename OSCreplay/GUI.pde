@@ -147,6 +147,17 @@ void initGUI() {
     ;
   z++;
 
+  cp5.addToggle( "proxy" )
+    .setLabel( "enable proxy" )
+    .setPosition(0, offsetY*z)
+    .setSize(50, 20)
+    .setValue(proxyEnabled)
+    .setMode(ControlP5.SWITCH)
+    .setColorActive(lightblue)
+    .setGroup(g1)
+    ;
+  z++;
+  
   cp5.addToggle( "performance" )
     .setLabel( "performance mode" )
     .setPosition(0, offsetY*z)
@@ -220,6 +231,11 @@ void loopReplay(boolean val) {
   if (replay!=null) {
     replay.loop = val;
   }
+}
+
+void proxy(boolean val) {
+    proxyEnabled = val;
+    println("proxy enabled: "+proxyEnabled);
 }
 
 void clear() {
