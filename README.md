@@ -58,9 +58,9 @@ Timestamps are issued in recorder - it represents recieved time since the record
 ## .CSV file format
 OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App. I am using buffered writer and reader so the file is written or red one line at a time. This is important to avoid out of memory error when reading / writing large files. CSV files uses ',' comma delimeter. First collumn is "timestamp" in milliseconds (Integer). First event is always timestamped as 0 - time before the first event arrive is ignored. Second collumn is "OSCaddress" - it should always start with "/" to comply with OSC protocol. Third collumn is "typetag". Typetag is used to determine how many variables are in the message data - each character represents one variable. Order matters. You can also have empty typetag in case there are no data in the message. Subsequent collumns are individual variables - number of variables must correspond to length of the typetag. 
 
-| timestamp | OSCaddress | typetag | var1 | var2 | var3 | var4 |
-| --------- | ---------- | ------- | ---- |----- |----- |----- |
-|0 | /someaddress | ifsd | 16 | 16.666 | some text | 16.666 |
+| timestamp | OSCaddress | typetag | timetag | var1 | var2 | var3 | var4 |
+| --------- | ---------- | ------- | ---- |----- |----- |----- |----- |
+|0 | /someaddress | ifsd | 1 | 16 | 16.666 | some text | 16.666 |
 
 ## How does it work?
 Under the hood the tool is programmed in Processing Java to run GUI and OSC and Websocket server. 
