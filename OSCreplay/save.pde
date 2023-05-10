@@ -13,6 +13,9 @@ PrintWriter output;
 void saveEvent( OscMessage msg ) {
 
   if (output != null && recordingEvents) {
+
+    //println(" timetag: "+msg.timetag());
+
     int currtime = millis();
     if (!firtEventSaved) {
       recTimeOffset = millis();
@@ -21,7 +24,15 @@ void saveEvent( OscMessage msg ) {
 
     String addr = msg.addrPattern();
     String typetag = msg.typetag();
-    String record = str(currtime-recTimeOffset)+","+addr+","+typetag+",";
+
+    //get timetag - this is only present in OSC bundle messages otherwise equals to 1
+    //convert to unix because NTP is stupid
+    long timetag = msg.timetag();
+    if ( timetag != 1) {
+      timetag = ntpToUnix( timetag );
+    }
+
+    String record = str(currtime-recTimeOffset)+","+addr+","+typetag+","+timetag+",";
 
     for (int i=0; i< typetag.length(); i++) {
       Character currType = typetag.charAt(i);
@@ -49,7 +60,7 @@ void startRecEvent() {
   recpath = dataPath("rec_"+day()+"_"+month()+"_"+year()+"-"+ int( random(0, 1)*1000 )+".csv"); //reset record path
   output = createWriter(recpath);
   recordingEvents = true;
-  String header ="timestamp,OSCaddress,typetag";
+  String header ="timestamp,OSCaddress,typetag,timetag";
   output.println( header ); //write header to the file
   println("recording started to "+recpath);
 }

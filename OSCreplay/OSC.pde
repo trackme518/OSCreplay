@@ -35,7 +35,6 @@ void oscEvent(OscMessage theOscMessage) {
     eventstatus.addEventStatus( true, currAddTrimmed, theOscMessage.typetag() );
   }
 
-
   //save only OSC not ment to control GUI
   if ( !theOscMessage.addrPattern().contains("/oscutil") ) {
     //resend all incoming OSC messages to remote target - act as a proxy
