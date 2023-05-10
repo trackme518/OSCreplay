@@ -164,4 +164,4 @@ Tested on Ubuntu 64bit. You can always run the app from the terminal. If using G
 If you are using websockets you need to close the connection from the client properly on exit otherwise there will websocket timeout error in the OSCReplay App and you will need to restart it.
 
 ## License
-Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International. Please refer to the [license](https://creativecommons.org/licenses/by-nc-nd/4.0/). Author is not liable for any damage caused by the software. Usage of the software is completely at your own risk. For commercial licensing please [https://tricktheear.eu/contact/](contact) us.   
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). Please refer to the [license](https://creativecommons.org/licenses/by-nc-sa/4.0/). Author is not liable for any damage caused by the software. Usage of the software is completely at your own risk. For commercial licensing please [https://tricktheear.eu/contact/](contact) us.   
