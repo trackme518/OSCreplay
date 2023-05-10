@@ -28,6 +28,7 @@ Displayed status messages are for debug - yellow ones are outgoing messages from
 Beside GUI there are more settings. Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad.
 ```JSON
 {
+  "proxyEnabled": true,
   "oscListenPort": 12000,
   "targetOscIp": "127.0.0.1",
   "useWebsocket": true,
@@ -38,6 +39,7 @@ Beside GUI there are more settings. Go into the data folder inside the OSCReplay
   "maxFrameRate": 1000
 }
 ```
+* "proxyEnabled": Boolean - whether the incoming OSC messages should be resend to "targetOscIp" and "oscTargetPort", effectively acting as a proxy. This way you can record and relay the messages at the same time. 
 * "oscListenPort": Integer - port where the App is listening for OSC commands (to control GUI remotely)
 * "targetOscIp": String - IP where to send OSC commands
 * "useWebsocket": Boolean - whether to use Websocket proxy
