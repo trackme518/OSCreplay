@@ -1,9 +1,9 @@
 # OSCreplay
 
 ## What is this good for?
-Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. Application is written in [Processing](https://processing.org/), open source user-friendly Java framework.
+Ever needed to record OSC events and replay them later? Want to send OSC from the client side vanilla JavaSctipt via WebSockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. Application is written in [Processing](https://processing.org/), open source user-friendly Java framework.
 
-This application was designed for scientific use, to record experiments, analyze recorded data and repeat the experiment in controlled settings. You do NOT need to know programming in order tzo use it. There is graphical user interface and you can  simply control it with mouse. If you need to automate the start and end of the recording you can control it by another program with OSC or via websockets protocol.    
+This application was designed for scientific use, to record experiments, analyze recorded data and repeat the experiment in controlled settings. You do NOT need to know programming to use it. There is a graphical user interface; you can control it with a mouse. If you need to automate the recording's start and end, you can control it by another program with OSC or via WebSockets protocol.  
 
 ![Encoder screenshot](./assets/screenshot1.jpg)
 
