@@ -6,9 +6,7 @@ Ever needed to record OSC events and replay them later? Want to send OSC from cl
 ![Encoder screenshot](./assets/screenshot1.jpg)
 
 ## Download - OSC replay
-* [MacOS Intelx64](PLACEHOLDER) TBD
-* [Windows64bit](https://github.com/trackme518/OSCreplay/releases/download/v1.1_winX64/v1.1_winX64.7z)
-* [Linux64bit](PLACEHOLDER) TBD
+* [Latest release](https://github.com/trackme518/OSCreplay/releases/latest)
 
 MacOS and Linux builds will be added later.
 
