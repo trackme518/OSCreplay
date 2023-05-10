@@ -1,7 +1,7 @@
 # OSCreplay
 
 ## What is this good for?
-Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. 
+Ever needed to record OSC events and replay them later? Want to send OSC from client side vanilla JavaSctipt via websockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. Application is written in [Processing](https://processing.org/), open source user-friendly Java framework.
 
 ![Encoder screenshot](./assets/screenshot1.jpg)
 
@@ -57,9 +57,11 @@ OSC/Websocket events are saved in .CSV file in data folder inside OSCreplay App.
 | --------- | ---------- | ------- | ---- |----- |----- |----- |
 |0 | /someaddress | ifsd | 16 | 16.666 | some text | 16.666 |
 
-
 ## How does it work?
 Under the hood the tool is programmed in Processing Java to run GUI and OSC and Websocket server. 
+
+## How to build from source?
+Download [Processing](https://processing.org/) (originally made with version 4.2), download libraries [OSCP5](https://github.com/sojamo/oscp5), [websockets](https://github.com/alexandrainst/processing_websockets), [controlP5](https://github.com/sojamo/controlp5). Open the source and select File->Export Application to build for your platform. Processing supports Windows, Linux, Apple, Android, functionality depands on your hardware and some changes might be needed. Read more at [Processing documentation](https://processing.org/environment/#export).  
 
 ## Websocket
 You can send vanilla websocket messages to the app and it will proxy them as proper OSC messages to the target. You can also save them into .CSV file and send them as OSC later. Websocket messages need to be encoded in JSON format and send as plain String like so:
