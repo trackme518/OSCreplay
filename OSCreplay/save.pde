@@ -125,7 +125,7 @@ void loadData() {
   websocketPrefix = json.getString("websocketPrefix");
   useWebsocket = json.getBoolean("useWebsocket");
   proxyEnabled = json.getBoolean("proxyEnabled");
-  
+
   convertNtpToUnix = json.getBoolean("convertNtpToUnix");
   println("settings loaded");
 }
