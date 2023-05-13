@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 
 //boolean recevents = false; //flag to save the incoming events to text file
 boolean recordingEvents = false; //flag to save the incoming events to text file
+boolean convertNtpToUnix = false; //whether to convert timetag of the incoming OSC msg to UNIX format (easier format)
 String recpath; // = dataPath("recordedEvents_"+day()+"_"+month()+"_"+year()+"-"+ int( random(0,1)*1000 )+".csv");
 int recTimeOffset = 0;
 boolean firtEventSaved = false; //first event was saved
@@ -28,8 +29,10 @@ void saveEvent( OscMessage msg ) {
     //get timetag - this is only present in OSC bundle messages otherwise equals to 1
     //convert to unix because NTP is stupid
     long timetag = msg.timetag();
-    if ( timetag != 1) {
-      timetag = ntpToUnix( timetag );
+    if (convertNtpToUnix) {
+      if ( timetag != 1) {
+        timetag = ntpToUnix( timetag );
+      }
     }
 
     String record = str(currtime-recTimeOffset)+","+addr+","+typetag+","+timetag+",";
@@ -91,6 +94,8 @@ void saveData() {
   json.setBoolean("useWebsocket", useWebsocket);
   json.setBoolean("proxyEnabled", proxyEnabled);
 
+  json.setBoolean("convertNtpToUnix", convertNtpToUnix);
+
   //GUI
   json.setInt("maxFrameRate", maxFrameRate);
   saveJSONObject(json, dataPath("settings.json") );
@@ -120,5 +125,7 @@ void loadData() {
   websocketPrefix = json.getString("websocketPrefix");
   useWebsocket = json.getBoolean("useWebsocket");
   proxyEnabled = json.getBoolean("proxyEnabled");
+  
+  convertNtpToUnix = json.getBoolean("convertNtpToUnix");
   println("settings loaded");
 }
