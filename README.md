@@ -30,6 +30,7 @@ Displayed status messages are for debug - yellow ones are outgoing messages from
 Beside GUI there are more settings. Go into the data folder inside the OSCReplay App. Open "settings.json" in notepad.
 ```JSON
 {
+  "convertNtpToUnix": false,
   "proxyEnabled": true,
   "oscListenPort": 12000,
   "targetOscIp": "127.0.0.1",
@@ -41,6 +42,7 @@ Beside GUI there are more settings. Go into the data folder inside the OSCReplay
   "maxFrameRate": 1000
 }
 ```
+* "convertNtpToUnix": Boolean - whether to convert timetag of incoming OSC bundle messages into UNIX timestamp format (easier to work with then NTP) - only valid for OSC bundles
 * "proxyEnabled": Boolean - whether the incoming OSC messages should be resend to "targetOscIp" and "oscTargetPort", effectively acting as a proxy. This way you can record and relay the messages at the same time. 
 * "oscListenPort": Integer - port where the App is listening for OSC commands (to control GUI remotely)
 * "targetOscIp": String - IP where to send OSC commands
