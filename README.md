@@ -166,5 +166,20 @@ Tested on Windows 10. It should work out of the box. Just double click the "OSCR
 ## Known bugs
 If you are using websockets you need to close the connection from the client properly on exit otherwise there will websocket timeout error in the OSCReplay App and you will need to restart it.
 
+## Cite
+Please always link back to this repository and attribute to Vojtěch Leischner. 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7977295.svg)](https://doi.org/10.5281/zenodo.7977295)
+
+BibTex:
+```
+@MISC{Leischner2023,
+  title     = "Open Sound Control protocol recorder and player",
+  author    = "Leischner, Vojt{\v e}ch",
+  howpublished = "\url{https://github.com/trackme518/OSCreplay}",
+  publisher = "Zenodo",
+  year      =  2023
+}
+```
+
 ## License
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0). When using or distributing the code, give a credit in the form of "OSCreplay software (https://github.com/trackme518/OSCreplay) by Vojtech Leischner (https://tricktheear.eu)". Please refer to the [license](./LICENSE.markdown) or see online [reference](https://creativecommons.org/licenses/by-nc-sa/4.0/). Author is not liable for any damage caused by the software. Usage of the software is completely at your own risk. For commercial licensing please [contact](https://tricktheear.eu/contact/) us.   
