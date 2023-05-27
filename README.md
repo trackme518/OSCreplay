@@ -1,4 +1,5 @@
 # OSCreplay
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7977295.svg)](https://doi.org/10.5281/zenodo.7977295)
 
 ## What is this good for?
 Ever needed to record OSC events and replay them later? Want to send OSC from the client side vanilla JavaSctipt via WebSockets? Now you can. You can simultaneously record incoming OSC and resend it to another target via proxy. Application is written in [Processing](https://processing.org/), open source user-friendly Java framework.
