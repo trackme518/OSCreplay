@@ -165,7 +165,7 @@ You can also control the OSCReplay App with OSC or Websockets messages. Below se
 Tested on Windows 10. It should work out of the box. Just double click the "OSCReplay.exe" file. If you are using antivirus such as Windows Defender it will show warning - you can safely click "More info" and choose "Run anyway". Next time it should run without warning. Allow the program in your firewall for both private and public connections.
 
 ## Known bugs
-If you are using websockets you need to close the connection from the client properly on exit otherwise there will websocket timeout error in the OSCReplay App and you will need to restart it.
+If you are using websockets you need to close the connection from the client properly on exit otherwise there will be websocket timeout error in the OSCReplay App and you will need to restart it.
 
 ## Cite
 Please always link back to this repository and attribute to Vojtěch Leischner. 
