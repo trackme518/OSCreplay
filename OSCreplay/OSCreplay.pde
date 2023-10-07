@@ -54,3 +54,21 @@ void draw() {
     surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps" );//current:"+round(frameRate)
   }
 }
+
+
+//----------------------------------------------------------------------------
+//ESTABLISH CONNECTION BASED ON CURRENT IP with IMU sensor
+import java.net.InetAddress;
+
+void oscConnect() {
+  OscMessage connection = new OscMessage("/connect");
+  String currIp = targetOscIp; //get value from GUI
+  String[] ipComponents = split(currIp, ".");
+  String brodcastIP = ipComponents[0]+"."+ipComponents[1]+"."+ipComponents[2]+".255";
+  
+  println("current IP: " + currIp);
+  NetAddress broadcast = new NetAddress(brodcastIP, oscListenPort);
+  connection.add(currIp);
+  oscP5.send(connection, broadcast);
+  println("Sending IP "+currIp+" over OSC: "+brodcastIP);
+}

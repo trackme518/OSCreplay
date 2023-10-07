@@ -157,7 +157,7 @@ void initGUI() {
     .setGroup(g1)
     ;
   z++;
-  
+
   cp5.addToggle( "performance" )
     .setLabel( "performance mode" )
     .setPosition(0, offsetY*z)
@@ -234,8 +234,8 @@ void loopReplay(boolean val) {
 }
 
 void proxy(boolean val) {
-    proxyEnabled = val;
-    println("proxy enabled: "+proxyEnabled);
+  proxyEnabled = val;
+  println("proxy enabled: "+proxyEnabled);
 }
 
 void clear() {
@@ -248,6 +248,10 @@ void keyPressed () {
   if ( key == 'f' || key == 'F' ) {
     //performance(false);
     cp5.getController("performance").setValue( int( !performanceMode ) );
+  }
+
+  if (key=='c') {
+    oscConnect();
   }
 }
 //-------------------------------------------

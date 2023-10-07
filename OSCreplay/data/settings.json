@@ -1,11 +1,11 @@
 {
   "convertNtpToUnix": false,
   "proxyEnabled": false,
-  "oscListenPort": 12000,
-  "targetOscIp": "127.0.0.1",
+  "oscListenPort": 7777,
+  "targetOscIp": "10.0.0.104",
   "useWebsocket": true,
   "websocketPrefix": "/oscutil",
   "websocketPort": 9999,
-  "oscTargetPort": 16000,
+  "oscTargetPort": 8000,
   "maxFrameRate": 1000
 }
