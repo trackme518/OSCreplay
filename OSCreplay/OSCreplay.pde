@@ -4,25 +4,52 @@
 
 boolean performanceMode = false;
 boolean performanceModeSet = false;
-int maxFrameRate = 1000;
+int maxFrameRate = 120;
 float avgFps = 0.0;
 
 void setup() {
   //size(640, 480);
   size(640, 480, P2D);
   surface.setTitle("OSC REPLAY ");
+
+  /*
+  //moved to prevent GL renderer timeout
   loadData(); //load user data
-  initOSCAPI();
-  initReplay(); //see replay tab - playback events from CSV file
-  if (useWebsocket) {
-    initWebsocket();
-  }
-  initGUI();
+   initOSCAPI();
+   initReplay(); //see replay tab - playback events from CSV file
+   if (useWebsocket) {
+   initWebsocket();
+   }
+   initGUI();
+   */
   frameRate(maxFrameRate);
-  NetInfo.print();
+  //NetInfo.print();
 }
 
+boolean intialised = false;
+
 void draw() {
+
+  if (!intialised && frameCount > 2) {
+    loadData(); //load user data
+    initOSCAPI();
+    initReplay(); //see replay tab - playback events from CSV file
+    if (useWebsocket) {
+      initWebsocket();
+    }
+    initGUI();
+
+    intialised = true;
+  }
+
+  if (!intialised ) {
+    background(0);
+    fill(255);
+    textSize(24);
+    text("loading...", width/2-textWidth("loading...")/2, height/2);
+    return;
+  }
+
   if (replay!=null) {
     replay.updateReplay();
   }
@@ -65,7 +92,7 @@ void oscConnect() {
   String currIp = targetOscIp; //get value from GUI
   String[] ipComponents = split(currIp, ".");
   String brodcastIP = ipComponents[0]+"."+ipComponents[1]+"."+ipComponents[2]+".255";
-  
+
   println("current IP: " + currIp);
   NetAddress broadcast = new NetAddress(brodcastIP, oscListenPort);
   connection.add(currIp);

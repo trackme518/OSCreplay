@@ -2,7 +2,7 @@
   "convertNtpToUnix": false,
   "proxyEnabled": false,
   "oscListenPort": 7777,
-  "targetOscIp": "10.0.0.104",
+  "targetOscIp": "192.168.4.2",
   "useWebsocket": true,
   "websocketPrefix": "/oscutil",
   "websocketPort": 9999,

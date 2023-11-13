@@ -252,6 +252,7 @@ void keyPressed () {
 
   if (key=='c') {
     oscConnect();
+    println("connect request send");
   }
 }
 //-------------------------------------------
