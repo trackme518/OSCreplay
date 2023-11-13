@@ -9,7 +9,7 @@ This application was designed for scientific use, to record experiments, analyze
 ![Encoder screenshot](./assets/screenshot1.jpg)
 
 ## Download - OSC replay
-* [Latest release](https://github.com/trackme518/OSCreplay/releases/latest)
+* [Latest release](https://github.com/trackme518/OSCreplay/releases)
 
 MacOS and Linux builds will be added later.
 
