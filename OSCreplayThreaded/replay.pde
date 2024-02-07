@@ -1,3 +1,5 @@
+import java.util.stream.*;
+
 Replay replay;
 ArrayList<String>replayFilesAvailable = new ArrayList<String>();
 boolean resaveOnReplay = false; //this for dev purposes only - update variables in files....DELETE IN PRODUCTION!!!
@@ -8,8 +10,13 @@ void initReplay() {
 }
 
 class Replay implements Runnable {
-  Thread localThread;
-  long startTime = 0;
+      BufferedReader reader;
+   // String line;
+    
+  ArrayList<OscMessage>messages = new ArrayList<OscMessage>();
+  //OscBundle bundle = new OscBundle();
+  //ArrayList<Thread>threads = new ArrayList<Thread>();
+  //Thread localThread;
   //OscMessage
   boolean loop = false;
 
@@ -17,19 +24,16 @@ class Replay implements Runnable {
 
   String filename = null;
   boolean playing = false;
-  boolean readNext = false;
-  boolean eventred = false;
+  int threadsRunning = 0;
 
-  BufferedReader reader;
-  String line;
   //int lineIndex = 1; //start on second line - ignore header
 
   int timer=0;
-  int timestamp = 0;
-  OscMessage myMessage = null;
-  String OSCaddress = "";
-  String OSCtypetag = "";
-  long OSCtimetag = 1;
+  //int timestamp = 0;
+  //OscMessage myMessage = null;
+  //String OSCaddress = "";
+  //String OSCtypetag = "";
+  //long OSCtimetag = 1;
   //---------------------------------------------------------------
   Replay() {
   }
@@ -42,50 +46,50 @@ class Replay implements Runnable {
   void updateReplay() {
     //read from file---
     if (playing) {
-      if (readNext) {
-        
-        //readNext = false;
-        localThread = new Thread(this);
-        startTime = millis();
-        localThread.start();
-/*
-        //eventred = readTableLine();
-        if ( eventred ) {
-          readNext = false;
+
+      //bundle = new OscBundle();
+      if ( threadsRunning < 100 ) {
+        for (int i=0; i<10; i++) {
+          Thread newThread = new Thread(this);
+          threadsRunning++;
+          newThread.start();
         }
-        */
+        //oscP5.send(otherServerLocation, bundle);
+        for (int i=0; i<messages.size(); i++) {
+          oscP5.send(messages.get(i), otherServerLocation);
+          println(threadsRunning);
+        }
+        messages.clear();
+        //osc.send(addr, bundle);
+        //println(threadsRunning);
+      } else {
+        println("exceeded 100 threads running");
       }
     }
     //--------
-    if (playing && eventred) {
-    //if (playing && eventred) {
-      if ( millis() - timer > timestamp) {
-
-        if (!performanceModeSet) {
-          String currAdd = OSCaddress;
-          if (currAdd.length()>30) {
-            currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
-          }
-          eventstatus.addEventStatus( false, currAdd, OSCtypetag ); //add to debug messages
-        }
-
-        //SEND EVENTS OVER OSC :-------
-        OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
-        //------------------------------------------
-        readNext = true;
-        eventred = false;
-      }
-    }
-    //
   }
 
   boolean readTableLine() {
+    BufferedReader treader = createReader(filepath);
+    String line;
+
+    int timestamp = 0;
+    OscMessage myMessage = null;
+    String OSCaddress = "";
+    String OSCtypetag = "";
+
+
+try (Stream<String> lines = Files.lines(Paths.get("file.txt"))) {
+    line32 = lines.skip(31).findFirst().get();
+}
+
     try {
-      line = reader.readLine();
+      line = treader.readLine();
     }
     catch (IOException e) {
       e.printStackTrace();
       line = null;
+      threadsRunning--;
       return false;
     }
     if (line == null) {
@@ -98,6 +102,7 @@ class Replay implements Runnable {
         currController.setValue(0);
         currController.setLabel("replay file");
       }
+      threadsRunning--;
       return false;
     } else {
       //prepare parts of the message
@@ -105,6 +110,7 @@ class Replay implements Runnable {
       if ( pieces.length > 3 ) {
         //skip header - non integer type
         if ( !isInteger( pieces[0], 10 ) ) {
+          threadsRunning--;
           return false;
         }
 
@@ -134,10 +140,30 @@ class Replay implements Runnable {
             myMessage.add( Double.valueOf(pieces[i+4]) ); //cast to double
           }
         }
+
+        if ( millis() - timer > timestamp) {
+
+          //if (!performanceModeSet) {
+          //  String currAdd = OSCaddress;
+          //  if (currAdd.length()>30) {
+          //    currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
+          //  }
+          //  eventstatus.addEventStatus( false, currAdd, OSCtypetag ); //add to debug messages
+          //}
+
+          //SEND EVENTS OVER OSC :-------
+          messages.add(myMessage);
+          //bundle.add(myMessage);
+          //oscP5.send(myMessage, otherServerLocation);
+          //OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
+          //------------------------------------------
+        }
         //println("line typetag: "+OSCtypetag+" address: "+OSCaddress);
+        threadsRunning--;
         return true;
       }
     }
+    threadsRunning--;
     return false;
   }
 
@@ -153,7 +179,7 @@ class Replay implements Runnable {
     if (filepath != null) {
       if ( openFile() ) {//init buffer reader
         playing = true;
-        readNext = true;
+        //readNext = true;
         timer = millis();
         println("playback started from file "+filepath);
         cp5.getController( "replayFile" ).setLabel("replaying...");
