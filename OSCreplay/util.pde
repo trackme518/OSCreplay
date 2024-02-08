@@ -2,6 +2,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
+
+//File file = new File(path); 
+//System.out.println(file.exists());  //false
+//System.out.println(file.canRead());  //false
+
 boolean fileExists(String fileName) {
   File dataFolder = new File(dataPath(""));
   for (File file : dataFolder.listFiles()) {

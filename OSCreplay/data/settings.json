@@ -1,6 +1,6 @@
 {
   "convertNtpToUnix": false,
-  "proxyEnabled": false,
+  "proxyEnabled": true,
   "oscListenPort": 7777,
   "targetOscIp": "127.0.0.1",
   "useWebsocket": false,

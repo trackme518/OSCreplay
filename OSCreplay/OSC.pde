@@ -11,6 +11,11 @@ int oscListenPort = 12000;
 int oscTargetPort = 16000;
 
 boolean proxyEnabled = false;
+
+long lastOscUpdate = 0;
+int countOscMessages = 0;
+int fpsOscMessages = 0;
+
 //MyOSCAgent oscListener;
 //MyOSCAgent oscSender;
 
@@ -25,6 +30,12 @@ void initOSCAPI() {
 }
 
 void oscEvent(OscMessage theOscMessage) {
+  countOscMessages++;
+  if(millis()-lastOscUpdate>1000){
+    fpsOscMessages = countOscMessages;
+    countOscMessages = 0;
+    lastOscUpdate = millis();
+  }
 
   String currAddTrimmed = theOscMessage.addrPattern();
   if ( currAddTrimmed.length()>30 ) {
@@ -42,7 +53,9 @@ void oscEvent(OscMessage theOscMessage) {
       oscP5.send(theOscMessage, otherServerLocation);
     }
 
-    saveEvent( theOscMessage );
+    SaveEvent newLine = new SaveEvent(theOscMessage);
+    newLine.write(); //run on separate thread
+    //saveEvent( theOscMessage );
     return;
   }
 

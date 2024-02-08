@@ -57,7 +57,9 @@ class Replay {
         }
 
         //SEND EVENTS OVER OSC :-------
-        OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
+        oscP5.send(myMessage, otherServerLocation);
+        //println(myMessage);
+        //OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
         //------------------------------------------
         readNext = true;
         eventred = false;

@@ -78,7 +78,7 @@ void draw() {
   avgFps =  approxRollingAverage (avgFps, frameRate, 60 ); //averaged framerate over 60 samples
   //display fps in window title every 1/4 seconds
   if ( frameCount% round(frameRate/4.0) ==0 ) {
-    surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps" );//current:"+round(frameRate)
+    surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
   }
 }
 
