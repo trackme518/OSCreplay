@@ -24,11 +24,8 @@ long bufferPosition = 0;
 void initOSCAPI() {
   oscP5 = new OscP5(this, oscListenPort);
   otherServerLocation = new NetAddress(targetOscIp, oscTargetPort);
-
   eventstatus = new EventStatus(); //display debug info on send or recieved events
-
-  //oscListener = new MyOSCAgent(oscListenPort, true, null);
-  //oscSender = new MyOSCAgent(oscTargetPort, false, targetOscIp);
+  println("OSC intiated");
 }
 
 void oscEvent(OscMessage theOscMessage) {
@@ -65,7 +62,7 @@ void oscEvent(OscMessage theOscMessage) {
   }
 
   //---------------------------------------------------------------------------------
-
+/*
   //CONTROL GUI REMOTELY---------------------------------------------------------------
   if ( theOscMessage.checkAddrPattern("/oscutil_recording") &&  theOscMessage.checkTypetag("i") ) {
     int val = theOscMessage.get(0).intValue();
@@ -114,4 +111,5 @@ void oscEvent(OscMessage theOscMessage) {
     OscP5.flush(outmsg, otherServerLocation);
   }
   //---------------------------------------------------
+  */
 }

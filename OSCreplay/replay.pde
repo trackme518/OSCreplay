@@ -1,4 +1,4 @@
-import java.io.File;;
+import java.io.File;
 
 Replay replay;
 ArrayList<String>replayFilesAvailable = new ArrayList<String>();
@@ -6,8 +6,26 @@ boolean resaveOnReplay = false; //this for dev purposes only - update variables 
 
 void initReplay() {
   replay = new Replay();
-  replayFilesAvailable = listFiles(".csv");
+  listCsvFiles();
 }
+
+void listCsvFiles() {
+  replayFilesAvailable = listFiles(".csv");
+  if (replayFilesAvailable.size()<1) {
+    replayFilesAvailable.add("not avaliable");
+  }
+  gui.radio("playback file",  replayFilesAvailable);
+  
+}
+
+//void getPlaybackFileByName(String val) {
+//  for (int i=0; i<replayFilesAvailable.size(); i++) {
+//    if ( replayFilesAvailable.get(i).equals(val) ) {
+//      replayFilesAvailable.get(i);
+//    }
+//  }
+//}
+
 
 class Replay {
   //OscMessage
@@ -81,9 +99,6 @@ class Replay {
       if ( loop ) { //loop actovated
         this.playFile();//play again from start
       } else {
-        controlP5.Controller currController =  cp5.getController( "replayFile" );
-        currController.setValue(0);
-        currController.setLabel("replay file");
       }
       return false;
     } else {
@@ -167,7 +182,7 @@ class Replay {
         File file = new File(dataPath(filepath));
         println( "file size: "+file.length() ) ;//in bytes
         println( getFileSizeMegaBytes(file) +" MB");
-        cp5.getController( "replayFile" ).setLabel("replaying...");
+
         timer = millis();
         return;
       } else {
@@ -176,14 +191,12 @@ class Replay {
     } else {
       println("filepath to playback file is null");
     }
-    controlP5.Controller currController =  cp5.getController( "replayFile" );
-    currController.setValue(0);
   }
 
   void stopFile() {
     playing = false;
     lineIndex = 0; //start on second line - ignore header
-    cp5.getController( "replayFile" ).setLabel("replay file");
+    gui.toggleSet("replay file", false);
     println("playback ended");
   }
 }//END REPLAY CLASS

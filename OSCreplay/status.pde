@@ -60,6 +60,7 @@ class EventStatus {
       time = hour()+":"+minute()+":"+second(); //display incoming message current time
     }
   }
+  /*
   // Helper class implementing Comparator interface - not used right now...
   class sortEvents implements Comparator<Event> {
     // Sorting in ascending order against timestamp
@@ -68,4 +69,5 @@ class EventStatus {
       return a.timestamp - b.timestamp;
     }
   }
+  */
 }

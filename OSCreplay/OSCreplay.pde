@@ -4,41 +4,35 @@
 
 boolean performanceMode = false;
 boolean performanceModeSet = false;
-int maxFrameRate = 120;
+int maxFrameRate = 1000;
 float avgFps = 0.0;
 
 void setup() {
   //size(640, 480);
   size(640, 480, P2D);
   surface.setTitle("OSC REPLAY ");
-
-  /*
-  //moved to prevent GL renderer timeout
-  loadData(); //load user data
-   initOSCAPI();
-   initReplay(); //see replay tab - playback events from CSV file
-   if (useWebsocket) {
-   initWebsocket();
-   }
-   initGUI();
-   */
   frameRate(maxFrameRate);
-  //NetInfo.print();
 }
 
 boolean intialised = false;
 
 void draw() {
 
+  //SHOW FPS COUNTER
+  //calculate fps - exponential running average
+  avgFps =  approxRollingAverage (avgFps, frameRate, 60 ); //averaged framerate over 60 samples
+  //display fps in window title every 1/4 seconds
+  if ( frameCount% round(frameRate/4.0) ==0 ) {
+    surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
+  }
+
   if (!intialised && frameCount > 2) {
-    loadData(); //load user data
+    initGUI();
     initOSCAPI();
     initReplay(); //see replay tab - playback events from CSV file
     if (useWebsocket) {
       initWebsocket();
     }
-    initGUI();
-
     intialised = true;
   }
 
@@ -50,6 +44,8 @@ void draw() {
     return;
   }
 
+
+
   if (replay!=null) {
     replay.updateReplay();
   }
@@ -59,26 +55,14 @@ void draw() {
     if (eventstatus != null ) {
       eventstatus.displayEvents(); //see status tab
     }
-    //displayCommands();
-    cp5.draw();
 
-    if (performanceModeSet) {
-      performanceModeSet = false;
-    }
+    updateGUI();
   } else {
     if (!performanceModeSet) {
+      gui.hide("");
       renderPerformanceModeHint(); //see GUI tab
       performanceModeSet = true;
     }
-  }
-
-
-  //SHOW FPS COUNTER
-  //calculate fps - exponential running average
-  avgFps =  approxRollingAverage (avgFps, frameRate, 60 ); //averaged framerate over 60 samples
-  //display fps in window title every 1/4 seconds
-  if ( frameCount% round(frameRate/4.0) ==0 ) {
-    surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
   }
 }
 

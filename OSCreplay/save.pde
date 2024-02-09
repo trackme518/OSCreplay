@@ -105,56 +105,59 @@ void startRecEvent() {
 void stopRecEvent() {
   recordingEvents = false;
   recTimeOffset = 0;
+  listCsvFiles(); //refresh avaliable rec files list
   println("recording stoped");
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+
+/*
 //save genral settings
-void saveData() {
-  JSONObject json = new JSONObject();
-  //OSC
-
-  json.setInt("oscListenPort", oscListenPort);
-  json.setString("targetOscIp", targetOscIp);
-  json.setInt("oscTargetPort", oscTargetPort);
-  //Websocket
-  json.setInt("websocketPort", websocketPort);
-  json.setString("websocketPrefix", websocketPrefix);
-  json.setBoolean("useWebsocket", useWebsocket);
-  json.setBoolean("proxyEnabled", proxyEnabled);
-
-  json.setBoolean("convertNtpToUnix", convertNtpToUnix);
-
-  //GUI
-  json.setInt("maxFrameRate", maxFrameRate);
-  saveJSONObject(json, dataPath("settings.json") );
-}
-
-//-------------------------------------------------------------------
-//saves & loads how much distance all motors travelled in total - count in full revolutions
-
-
-//------------------------------------------------------------------------
-void loadData() {
-  String fileName = "settings.json";
-  if ( fileExists(fileName) != true ) {
-    println("settings.json is missing in data folder");
-    println("creating new default settings for you as a template to modify...");
-    saveData();
-    println("modify the file settings.json in data folder to change motors count and IP adresses");
-  }
-  JSONObject json = loadJSONObject( dataPath(fileName) );
-  //OSC
-  oscListenPort = json.getInt("oscListenPort");
-  targetOscIp = json.getString("targetOscIp");
-  oscTargetPort = json.getInt("oscTargetPort");
-  maxFrameRate = json.getInt("maxFrameRate");
-  //Websocket
-  websocketPort = json.getInt("websocketPort");
-  websocketPrefix = json.getString("websocketPrefix");
-  useWebsocket = json.getBoolean("useWebsocket");
-  proxyEnabled = json.getBoolean("proxyEnabled");
-
-  convertNtpToUnix = json.getBoolean("convertNtpToUnix");
-  println("settings loaded");
-}
+ void saveData() {
+ JSONObject json = new JSONObject();
+ //OSC
+ 
+ json.setInt("oscListenPort", oscListenPort);
+ json.setString("targetOscIp", targetOscIp);
+ json.setInt("oscTargetPort", oscTargetPort);
+ //Websocket
+ json.setInt("websocketPort", websocketPort);
+ json.setString("websocketPrefix", websocketPrefix);
+ json.setBoolean("useWebsocket", useWebsocket);
+ json.setBoolean("proxyEnabled", proxyEnabled);
+ 
+ json.setBoolean("convertNtpToUnix", convertNtpToUnix);
+ 
+ //GUI
+ json.setInt("maxFrameRate", maxFrameRate);
+ saveJSONObject(json, dataPath("settings.json") );
+ }
+ 
+ //-------------------------------------------------------------------
+ //saves & loads how much distance all motors travelled in total - count in full revolutions
+ 
+ //------------------------------------------------------------------------
+ void loadData() {
+ String fileName = "settings.json";
+ if ( fileExists(fileName) != true ) {
+ println("settings.json is missing in data folder");
+ println("creating new default settings for you as a template to modify...");
+ saveData();
+ println("modify the file settings.json in data folder to change motors count and IP adresses");
+ }
+ JSONObject json = loadJSONObject( dataPath(fileName) );
+ //OSC
+ oscListenPort = json.getInt("oscListenPort");
+ targetOscIp = json.getString("targetOscIp");
+ oscTargetPort = json.getInt("oscTargetPort");
+ maxFrameRate = json.getInt("maxFrameRate");
+ //Websocket
+ websocketPort = json.getInt("websocketPort");
+ websocketPrefix = json.getString("websocketPrefix");
+ useWebsocket = json.getBoolean("useWebsocket");
+ proxyEnabled = json.getBoolean("proxyEnabled");
+ 
+ convertNtpToUnix = json.getBoolean("convertNtpToUnix");
+ println("settings loaded");
+ }
+ */

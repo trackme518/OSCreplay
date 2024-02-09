@@ -1,7 +1,7 @@
 import websockets.*;
 WebsocketServer ws;
 
-Integer websocketPort = 9999;
+int websocketPort = 9999;
 String websocketPrefix = "/oscutil";
 boolean useWebsocket = true;
 
@@ -47,6 +47,7 @@ void webSocketServerEvent(String msg) {
           }
         }
       }
+      /*
       //CONTROL GUI REMOTELY---------------------------------------------------------------
       if ( addr.equals("/oscutil_recording") &&  controlVal!=-1 ) {
         cp5.getController("recordevents").setValue(controlVal);
@@ -83,6 +84,7 @@ void webSocketServerEvent(String msg) {
           ws.sendMessage(msgOut);
         }
       }
+      */
       //END CONROL GUI messages
       //---------------------------------------------------
       eventstatus.addEventStatus( true, addr, "" ); //add to debug messages, ignore typetag
