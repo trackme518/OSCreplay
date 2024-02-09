@@ -2,6 +2,7 @@
 //TBD remap values?
 //TBD error on cwebsocket connection timeout
 
+
 boolean performanceMode = false;
 boolean performanceModeSet = false;
 int maxFrameRate = 1000;
@@ -20,10 +21,15 @@ void draw() {
 
   //SHOW FPS COUNTER
   //calculate fps - exponential running average
-  avgFps =  approxRollingAverage (avgFps, frameRate, 60 ); //averaged framerate over 60 samples
+  //avgFps =  approxRollingAverage (avgFps, frameRate, 60 ); //averaged framerate over 60 samples
   //display fps in window title every 1/4 seconds
   if ( frameCount% round(frameRate/4.0) ==0 ) {
-    surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
+    surface.setTitle("OSC REPLAY "+round(  frameRate  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
+    //surface.setTitle("OSC REPLAY "+round(  avgFps  )+"fps OSC fps: "+fpsOscMessages+" " );//current:"+round(frameRate)
+  }
+
+  if (performanceModeSet) {
+    return;
   }
 
   if (!intialised && frameCount > 2) {
@@ -55,11 +61,10 @@ void draw() {
     if (eventstatus != null ) {
       eventstatus.displayEvents(); //see status tab
     }
-
     updateGUI();
+    //performanceModeSet = false;
   } else {
     if (!performanceModeSet) {
-      gui.hide("");
       renderPerformanceModeHint(); //see GUI tab
       performanceModeSet = true;
     }

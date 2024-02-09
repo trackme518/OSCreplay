@@ -1,5 +1,8 @@
 import com.krab.lazy.*;
+import com.krab.lazy.stores.LayoutStore;
 LazyGui gui;
+
+boolean guiVisible = true;
 
 PFont smallFont;
 PFont mediumFont;
@@ -61,7 +64,9 @@ void updateGUI() {
 
   replay.loop = gui.toggle("loop replay", replay.loop);
 
-  performanceMode = gui.toggle("performance mode", false);
+  if ( gui.button("performance mode")) {
+    switchPerformanceMode();
+  }
 
   if ( gui.button("clear") ) {
     eventstatus.clear();
@@ -86,13 +91,36 @@ void renderPerformanceModeHint() {
 
 void keyPressed () {
   if ( key == 'f' || key == 'F' ) {
-    performanceMode = !performanceMode;
-    gui.toggleSet("performance mode", performanceMode);
+    switchPerformanceMode();
   }
 
   if (key=='c') {
     oscConnect();
     println("connect request send");
   }
+}
+
+void switchPerformanceMode() {
+  LayoutStore  mystore = new LayoutStore();
+  performanceMode = !performanceMode;
+  gui.toggleSet("performance mode", performanceMode);
+  performanceModeSet = false;
+  
+  if (performanceMode) {  
+    if ( !mystore.isGuiHidden()) {
+      mystore.hideGuiToggle();
+    }
+  } else {
+    if ( mystore.isGuiHidden()) {
+      mystore.hideGuiToggle();
+    }
+  }
+  
+}
+
+void toggleShowGui() {
+  LayoutStore  mystore = new LayoutStore();
+  mystore.hideGuiToggle();
+  guiVisible = !guiVisible;
 }
 //-------------------------------------------
