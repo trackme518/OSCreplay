@@ -8,14 +8,57 @@ boolean convertNtpToUnix = false; //whether to convert timetag of the incoming O
 String recpath;
 
 long recTimeOffset = 0;
-boolean firtEventSaved = false; //first event was saved
 
 //threaded async process for writing to the file line by line
 class SaveEvent implements Runnable {
   OscMessage msg;
+  String csvString;
+  long bufferPosition = 0;
+  byte[] csvBytes;
 
-  SaveEvent(OscMessage _msg) {
+  SaveEvent(OscMessage _msg, long _pos) {
     this.msg = _msg;
+    this.bufferPosition = _pos;
+    this.csvString = oscMsgToCsvString();
+    this.csvBytes = this.csvString.getBytes();
+    //this.lineLengthBytes = this.csvString.length()*2; //every char is 2 bytes - 16bit
+  }
+
+  String oscMsgToCsvString() {
+    String addr = msg.addrPattern();
+    String typetag = msg.typetag();
+
+    //get timetag - this is only present in OSC bundle messages otherwise equals to 1
+    //convert to unix because NTP is stupid
+    long timetag = msg.timetag();
+    if (convertNtpToUnix) {
+      if ( timetag != 1) {
+        timetag = ntpToUnix( timetag );
+      }
+    }
+
+    long currtime =  (millis()-recTimeOffset);
+
+    String record = currtime+","+addr+","+typetag+","+timetag+",";
+
+    for (int i=0; i< typetag.length(); i++) {
+      Character currType = typetag.charAt(i);
+      if ( currType.equals('f') ) {
+        record+=msg.get(i).floatValue()+",";
+      }
+      if ( currType.equals('i') ) {
+        record+= msg.get(i).intValue() +",";
+      }
+      if ( currType.equals('s') ) {
+        record+= msg.get(i).stringValue() +",";
+      }
+      if ( currType.equals('d') ) {
+        record+= msg.get(i).doubleValue() +","; //cast double to string
+      }
+    }
+
+    record = record.substring(0, record.length()-1)+ '\n' ;//trim last comma, add line break
+    return record;
   }
 
   void write() {
@@ -24,7 +67,7 @@ class SaveEvent implements Runnable {
   }
 
   void run() {
-    saveEvent();
+    this.saveEvent();
   }
 
   //save incoming events to text file with timestamp
@@ -33,49 +76,10 @@ class SaveEvent implements Runnable {
       return;
     }
     if (recordingEvents) {
-      //println(" timetag: "+msg.timetag());
-      long currtime = millis();
-      if (!firtEventSaved) {
-        recTimeOffset = millis();
-        firtEventSaved = true;
-      }
-
-      String addr = msg.addrPattern();
-      String typetag = msg.typetag();
-
-      //get timetag - this is only present in OSC bundle messages otherwise equals to 1
-      //convert to unix because NTP is stupid
-      long timetag = msg.timetag();
-      if (convertNtpToUnix) {
-        if ( timetag != 1) {
-          timetag = ntpToUnix( timetag );
-        }
-      }
-
-      String record = (currtime-recTimeOffset)+","+addr+","+typetag+","+timetag+",";
-
-      for (int i=0; i< typetag.length(); i++) {
-        Character currType = typetag.charAt(i);
-        if ( currType.equals('f') ) {
-          record+=msg.get(i).floatValue()+",";
-        }
-        if ( currType.equals('i') ) {
-          record+= msg.get(i).intValue() +",";
-        }
-        if ( currType.equals('s') ) {
-          record+= msg.get(i).stringValue() +",";
-        }
-        if ( currType.equals('d') ) {
-          record+= msg.get(i).doubleValue() +","; //cast double to string
-        }
-      }
-
-      record = record.substring(0, record.length()-1)+ '\n' ;//trim last comma, add line break
-      println( record );
       //SLOW
       //output.println( record );//output to buffered writer
       //FASTER
-      writeToFile(recpath, record, true);
+      writeToFile(recpath, this.csvString, true, this.bufferPosition);
     }
   }
   //-----
@@ -89,7 +93,8 @@ void startRecEvent() {
     yourFile.createNewFile(); // if file already exists will do nothing
     recordingEvents = true;
     String header ="timestamp,OSCaddress,typetag,timetag"+"\n";
-    writeToFile(recpath, header, false);
+    bufferPosition = writeToFile(recpath, header, false, 0);
+    recTimeOffset = millis();
     println("recording started to "+recpath);
   }
   catch (IOException ioe) {
@@ -99,7 +104,6 @@ void startRecEvent() {
 //close and flush file output stream
 void stopRecEvent() {
   recordingEvents = false;
-  firtEventSaved = false;
   recTimeOffset = 0;
   println("recording stoped");
 }

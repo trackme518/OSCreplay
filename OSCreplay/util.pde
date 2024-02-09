@@ -184,24 +184,29 @@ public static long unixToNtp(long unixTimestamp) {
 //-------------------------------------------------
 //faster
 //write to file
-public void writeToFile(String fileName, String value, boolean append) {
+long writeToFile(String fileName, String value, boolean append, long _pos) {
   try {
     RandomAccessFile stream = new RandomAccessFile(fileName, "rw");
     FileChannel channel = stream.getChannel();
     if (append) {
-      channel.position( channel.size() ); //apppend
+      channel.position(_pos); //apppend
+      //channel.position( channel.size() ); //apppend
     }
     byte[] strBytes = value.getBytes();
     ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
     buffer.put(strBytes);
     buffer.flip();
     channel.write(buffer);
+    long currSize = channel.size();
     stream.close();
     channel.close();
+    return currSize;
   }
   catch(IOException e) {
     e.printStackTrace();
+    return 0;
   }
+  
 }
 //---------------------------------------
 long getFileSizeMegaBytes(File file) {

@@ -16,6 +16,8 @@ long lastOscUpdate = 0;
 int countOscMessages = 0;
 int fpsOscMessages = 0;
 
+long bufferPosition = 0;
+
 //MyOSCAgent oscListener;
 //MyOSCAgent oscSender;
 
@@ -31,7 +33,7 @@ void initOSCAPI() {
 
 void oscEvent(OscMessage theOscMessage) {
   countOscMessages++;
-  if(millis()-lastOscUpdate>1000){
+  if (millis()-lastOscUpdate>1000) {
     fpsOscMessages = countOscMessages;
     countOscMessages = 0;
     lastOscUpdate = millis();
@@ -53,10 +55,12 @@ void oscEvent(OscMessage theOscMessage) {
       oscP5.send(theOscMessage, otherServerLocation);
     }
 
-    SaveEvent newLine = new SaveEvent(theOscMessage);
-    newLine.saveEvent();
-    //newLine.write(); //run on separate thread
-    //saveEvent( theOscMessage );
+    if (recordingEvents) {
+      SaveEvent newLine = new SaveEvent(theOscMessage, bufferPosition );
+      bufferPosition += newLine.csvBytes.length;
+      //newLine.saveEvent();
+      newLine.write(); //run on separate thread
+    }
     return;
   }
 
