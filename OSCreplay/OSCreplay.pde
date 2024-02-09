@@ -2,6 +2,8 @@
 //TBD remap values?
 //TBD error on cwebsocket connection timeout
 
+//TBD - reimplement websocket + OSC control
+//TBD fix reloading radio witth file list from dir on update - currently static
 
 boolean performanceMode = false;
 boolean performanceModeSet = false;
