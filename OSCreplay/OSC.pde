@@ -54,7 +54,8 @@ void oscEvent(OscMessage theOscMessage) {
     }
 
     SaveEvent newLine = new SaveEvent(theOscMessage);
-    newLine.write(); //run on separate thread
+    newLine.saveEvent();
+    //newLine.write(); //run on separate thread
     //saveEvent( theOscMessage );
     return;
   }

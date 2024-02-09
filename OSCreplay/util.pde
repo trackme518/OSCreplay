@@ -81,15 +81,16 @@ void exit() {
 }
 //--------------------------------------------------
 public static boolean isNumeric(String strNum) {
-    if (strNum == null) {
-        return false;
-    }
-    try {
-        double d = Double.parseDouble(strNum);
-    } catch (NumberFormatException nfe) {
-        return false;
-    }
-    return true;
+  if (strNum == null) {
+    return false;
+  }
+  try {
+    double d = Double.parseDouble(strNum);
+  }
+  catch (NumberFormatException nfe) {
+    return false;
+  }
+  return true;
 }
 //--------------------------------------------------
 
@@ -201,4 +202,16 @@ public void writeToFile(String fileName, String value, boolean append) {
   catch(IOException e) {
     e.printStackTrace();
   }
+}
+//---------------------------------------
+long getFileSizeMegaBytes(File file) {
+  return (long) file.length() / (1024 * 1024);//mb
+}
+
+long getFileSizeKiloBytes(File file) {
+  return (long) file.length() / 1024; //kb
+}
+
+long getFileSizeBytes(File file) {
+  return file.length() ; //bytes
 }

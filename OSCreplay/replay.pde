@@ -1,3 +1,5 @@
+import java.io.File;;
+
 Replay replay;
 ArrayList<String>replayFilesAvailable = new ArrayList<String>();
 boolean resaveOnReplay = false; //this for dev purposes only - update variables in files....DELETE IN PRODUCTION!!!
@@ -48,7 +50,7 @@ class Replay {
 
         readNext = true;
         eventred = false;
-        
+
         String currAdd = OSCaddress;
         if (currAdd.length()>30) {
           currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
@@ -90,7 +92,7 @@ class Replay {
       if ( pieces.length > 3 ) {
         //skip header - non integer type
         //if ( lineIndex == 0 ) {
-        if( !isNumeric(pieces[0]) ){
+        if ( !isNumeric(pieces[0]) ) {
           println("header skip");
           return false;
         }
@@ -127,7 +129,7 @@ class Replay {
             this.myMessage.add( Double.valueOf(pieces[i+4]) ); //cast to double
           }
         }
-        //println("line typetag: "+OSCtypetag+" address: "+OSCaddress + " timestamp: "+timestamp);
+        println("line typetag: "+OSCtypetag+" address: "+OSCaddress + " timestamp: "+timestamp);
         return true;
       }
     }
@@ -144,7 +146,7 @@ class Replay {
       String currLine = raf.readLine();
       //println(currLine);
       this.lineIndex = raf.getFilePointer();
-      //println(current_postion);
+      println(this.lineIndex);
       raf.close();
       return currLine;
     }
@@ -161,6 +163,10 @@ class Replay {
         playing = true;
         readNext = true;
         println("playback started from file "+filepath);
+        //14220
+        File file = new File(dataPath(filepath));
+        println( "file size: "+file.length() ) ;//in bytes
+        println( getFileSizeMegaBytes(file) +" MB");
         cp5.getController( "replayFile" ).setLabel("replaying...");
         timer = millis();
         return;
