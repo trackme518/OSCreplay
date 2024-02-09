@@ -12,18 +12,17 @@ class Replay {
   boolean loop = false;
 
   String filepath = null;
+  long lineIndex = 0; //start on second line - ignore header
 
   String filename = null;
   boolean playing = false;
   boolean readNext = false;
   boolean eventred = false;
 
-  BufferedReader reader;
   String line;
-  //int lineIndex = 1; //start on second line - ignore header
 
-  int timer=0;
-  int timestamp = 0;
+  long timer=0;
+  long timestamp = 0;
   OscMessage myMessage = null;
   String OSCaddress = "";
   String OSCtypetag = "";
@@ -45,8 +44,11 @@ class Replay {
     }
     //--------
     if (playing && eventred) {
-      if ( millis() - timer > timestamp) {
+      if ( (millis() - timer) > timestamp) {
 
+        readNext = true;
+        eventred = false;
+        
         String currAdd = OSCaddress;
         if (currAdd.length()>30) {
           currAdd = OSCaddress.substring(0, 30); //trimm to 30 characters
@@ -61,27 +63,21 @@ class Replay {
         //println(myMessage);
         //OscP5.flush(myMessage, otherServerLocation); //send without triggering onOSC event listener
         //------------------------------------------
-        readNext = true;
-        eventred = false;
       }
     }
     //
   }
 
   boolean readLine() {
-    try {
-      line = reader.readLine();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-      line = null;
-      return false;
-    }
+    line = readFromFile(dataPath(filepath));
+    //line = readFromFile(dataPath(filepath), lineIndex);
+    //this.lineIndex++;
+    //println(line);
     if (line == null) {
       println("end of file");
-      stopFile();
+      this.stopFile();
       if ( loop ) { //loop actovated
-        playFile();//play again from start
+        this.playFile();//play again from start
       } else {
         controlP5.Controller currController =  cp5.getController( "replayFile" );
         currController.setValue(0);
@@ -93,59 +89,80 @@ class Replay {
       String[] pieces = split(line, ',');
       if ( pieces.length > 3 ) {
         //skip header - non integer type
-        if ( !isInteger( pieces[0], 10 ) ) {
+        //if ( lineIndex == 0 ) {
+        if( !isNumeric(pieces[0]) ){
+          println("header skip");
           return false;
         }
 
-        timestamp = int(pieces[0]);//timestamp
-        OSCaddress = pieces[1];//OSC address
-        OSCtypetag = pieces[2];//OSC typetag
+        try {
+          this.timestamp = Long.parseLong(pieces[0], 10);//timestamp
+        }
+        catch (NumberFormatException nfe) {
+          //println(nfe);
+          return false;
+        }
+        this.OSCaddress = pieces[1];//OSC address
+        this.OSCtypetag = pieces[2];//OSC typetag
 
         //right now we are not using the timetag parameter
         //however this could be used to analyze difference between send time and recieve time
         //OSCtimetag = Long.parseLong(pieces[3]);//OSC timetag  present in OSC bundles
 
-        myMessage = new OscMessage(OSCaddress); //reset
+        this.myMessage = new OscMessage(OSCaddress); //reset
         //rest of the line should be values - check for them
         for (int i=0; i<OSCtypetag.length(); i++) {
           Character currType = OSCtypetag.charAt(i);
           //println("currr type: "+currType);
           if ( currType.equals('f') ) {
-            myMessage.add( float(pieces[i+4]) );
+            this.myMessage.add( float(pieces[i+4]) );
           }
           if ( currType.equals('i') ) {
-            myMessage.add( int(pieces[i+4]) );
+            this.myMessage.add( int(pieces[i+4]) );
           }
           if ( currType.equals('s') ) {
-            myMessage.add( (String)pieces[i+4] );
+            this.myMessage.add( (String)pieces[i+4] );
           }
           if ( currType.equals('d') ) {
-            myMessage.add( Double.valueOf(pieces[i+4]) ); //cast to double
+            this.myMessage.add( Double.valueOf(pieces[i+4]) ); //cast to double
           }
         }
-        //println("line typetag: "+OSCtypetag+" address: "+OSCaddress);
+        //println("line typetag: "+OSCtypetag+" address: "+OSCaddress + " timestamp: "+timestamp);
         return true;
       }
     }
     return false;
   }
 
-  boolean openFile() {
-    boolean pathSet = fileExists(filepath);
-    if (pathSet) {
-      reader = createReader(filepath);
+  //---------------------------------------------
+  //read from file
+  String readFromFile(String fileName) {
+    try {
+      RandomAccessFile raf = new RandomAccessFile(fileName, "r");
+      //
+      raf.seek(lineIndex);
+      String currLine = raf.readLine();
+      //println(currLine);
+      this.lineIndex = raf.getFilePointer();
+      //println(current_postion);
+      raf.close();
+      return currLine;
     }
-    return pathSet;
+    catch (IOException ex) {
+      ex.printStackTrace();
+      return null;
+    }
   }
+  //--------------------------------------------
 
   void playFile() {
     if (filepath != null) {
-      if ( openFile() ) {//init buffer reader
+      if ( fileExists(filepath) ) {//init buffer reader
         playing = true;
         readNext = true;
-        timer = millis();
         println("playback started from file "+filepath);
         cp5.getController( "replayFile" ).setLabel("replaying...");
+        timer = millis();
         return;
       } else {
         println("error during opening file "+filepath);
@@ -159,7 +176,7 @@ class Replay {
 
   void stopFile() {
     playing = false;
-    reader = null;
+    lineIndex = 0; //start on second line - ignore header
     cp5.getController( "replayFile" ).setLabel("replay file");
     println("playback ended");
   }

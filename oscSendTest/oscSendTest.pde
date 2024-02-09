@@ -16,7 +16,7 @@ int oscSendFps = 0;
 
 long lastSendTime = 0;
 
-int oscSendTargetFps = 60;
+int oscSendTargetFps = 30;
 int millisIntervalSend = 1000/oscSendTargetFps;
 
 void setup() {
@@ -70,7 +70,7 @@ void keyPressed() {
 void oscEvent( OscMessage m ) {
   println(m);
   oscRecieved++;
-  if (millis()-lastRecievedTime>1000) {
+  if ((millis()-lastRecievedTime)>1000) {
     oscFps = oscRecieved;
     oscRecieved = 0;
     lastRecievedTime = millis();

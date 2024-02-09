@@ -7,10 +7,10 @@ boolean recordingEvents = false; //flag to save the incoming events to text file
 boolean convertNtpToUnix = false; //whether to convert timetag of the incoming OSC msg to UNIX format (easier format)
 String recpath;
 
-int recTimeOffset = 0;
+long recTimeOffset = 0;
 boolean firtEventSaved = false; //first event was saved
 
-
+//threaded async process for writing to the file line by line
 class SaveEvent implements Runnable {
   OscMessage msg;
 
@@ -52,26 +52,26 @@ class SaveEvent implements Runnable {
         }
       }
 
-      String record = str(currtime-recTimeOffset)+","+addr+","+typetag+","+timetag+",";
+      String record = (currtime-recTimeOffset)+","+addr+","+typetag+","+timetag+",";
 
       for (int i=0; i< typetag.length(); i++) {
         Character currType = typetag.charAt(i);
         if ( currType.equals('f') ) {
-          record+=str( msg.get(i).floatValue() )+",";
+          record+=msg.get(i).floatValue()+",";
         }
         if ( currType.equals('i') ) {
-          record+=str( msg.get(i).intValue() )+",";
+          record+= msg.get(i).intValue() +",";
         }
         if ( currType.equals('s') ) {
           record+= msg.get(i).stringValue() +",";
         }
         if ( currType.equals('d') ) {
-          record+= String.valueOf( msg.get(i).doubleValue() ) +","; //cast double to string
+          record+= msg.get(i).doubleValue() +","; //cast double to string
         }
       }
 
       record = record.substring(0, record.length()-1)+ '\n' ;//trim last comma, add line break
-      //println( record );
+      println( record );
       //SLOW
       //output.println( record );//output to buffered writer
       //FASTER
@@ -153,25 +153,4 @@ void loadData() {
 
   convertNtpToUnix = json.getBoolean("convertNtpToUnix");
   println("settings loaded");
-}
-
-//faster
-public void writeToFile(String fileName, String value, boolean append) {
-  try {
-    RandomAccessFile stream = new RandomAccessFile(fileName, "rw");
-    FileChannel channel = stream.getChannel();
-    if (append) {
-      channel.position( channel.size() ); //apppend
-    }
-    byte[] strBytes = value.getBytes();
-    ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
-    buffer.put(strBytes);
-    buffer.flip();
-    channel.write(buffer);
-    stream.close();
-    channel.close();
-  }
-  catch(IOException e) {
-    e.printStackTrace();
-  }
 }

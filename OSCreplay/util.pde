@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-//File file = new File(path); 
+//File file = new File(path);
 //System.out.println(file.exists());  //false
 //System.out.println(file.canRead());  //false
 
@@ -70,31 +70,26 @@ void exit() {
   }
   /*
   if (midifile !=null) {
-    if (midifile.synth !=null) {
-      midifile.synth.close();
-      println("synth closed");
-    }
-  }
-  */
+   if (midifile.synth !=null) {
+   midifile.synth.close();
+   println("synth closed");
+   }
+   }
+   */
   super.stop();
   super.exit();
 }
-
-//-----------------------------------------------
-public static boolean isInteger(String s) {
-  return isInteger(s, 10);
-}
-
-public static boolean isInteger(String s, int radix) {
-  if (s.isEmpty()) return false;
-  for (int i = 0; i < s.length(); i++) {
-    if (i == 0 && s.charAt(i) == '-') {
-      if (s.length() == 1) return false;
-      else continue;
+//--------------------------------------------------
+public static boolean isNumeric(String strNum) {
+    if (strNum == null) {
+        return false;
     }
-    if (Character.digit(s.charAt(i), radix) < 0) return false;
-  }
-  return true;
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
+    return true;
 }
 //--------------------------------------------------
 
@@ -184,4 +179,26 @@ public static long unixToNtp(long unixTimestamp) {
   long ntpTimestamp = (ntpSeconds << 32) | (ntpFraction & 0xFFFFFFFFL); // Treat as unsigned
   ntpTimestamp = ntpTimestamp & 0x7FFFFFFFFFFFFFFFL; // Mask out sign bit - treat as unsigned
   return ntpTimestamp;
+}
+//-------------------------------------------------
+//faster
+//write to file
+public void writeToFile(String fileName, String value, boolean append) {
+  try {
+    RandomAccessFile stream = new RandomAccessFile(fileName, "rw");
+    FileChannel channel = stream.getChannel();
+    if (append) {
+      channel.position( channel.size() ); //apppend
+    }
+    byte[] strBytes = value.getBytes();
+    ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
+    buffer.put(strBytes);
+    buffer.flip();
+    channel.write(buffer);
+    stream.close();
+    channel.close();
+  }
+  catch(IOException e) {
+    e.printStackTrace();
+  }
 }

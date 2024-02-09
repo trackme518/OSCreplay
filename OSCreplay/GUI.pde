@@ -181,10 +181,11 @@ void controlEvent(ControlEvent theEvent) {
   if ( controlName.equals("playbackFileList") ) {
     //Map item = cp5.get(ScrollableList.class, controlName).getItem( (int)currController.getValue() );
     int currVal = (int)currController.getValue();
+    //println(currVal);
     if (replay!=null) {
       replay.filepath = replayFilesAvailable.get(currVal);
     }
-    println("selected file "+currVal);
+    println("selected file "+replay.filepath);
   }
 
   saveData();
