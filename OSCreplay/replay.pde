@@ -144,7 +144,7 @@ class Replay {
             this.myMessage.add( Double.valueOf(pieces[i+4]) ); //cast to double
           }
         }
-        println("line typetag: "+OSCtypetag+" address: "+OSCaddress + " timestamp: "+timestamp);
+        //println("line typetag: "+OSCtypetag+" address: "+OSCaddress + " timestamp: "+timestamp);
         return true;
       }
     }
@@ -161,7 +161,7 @@ class Replay {
       String currLine = raf.readLine();
       //println(currLine);
       this.lineIndex = raf.getFilePointer();
-      println(this.lineIndex);
+      //println(this.lineIndex);
       raf.close();
       return currLine;
     }

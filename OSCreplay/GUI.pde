@@ -26,6 +26,20 @@ void initGUI() {
   mediumFont = createFont("Arial", 18);
   textFont(smallFont, 12);
 }
+
+
+void playAudio() {
+  OscMessage myMessage = new OscMessage("/play");
+  //myMessage.add(true);
+  oscP5.send(myMessage, otherServerLocation);
+  println("play");
+}
+
+void stopAudio() {
+  OscMessage myMessage = new OscMessage("/stop");
+  oscP5.send(myMessage, otherServerLocation);
+  println("stop");
+}
 //========================================================================================
 
 void updateGUI() {
@@ -56,9 +70,13 @@ void updateGUI() {
   }
   boolean guireplay = gui.toggle("replay file", false);
   if (guireplay && !replay.playing) {
+    playAudio();
+    println("PLAY");
     replay.playFile();
   }
   if (!guireplay && replay.playing) {
+    stopAudio();
+    println("STOP");
     replay.stopFile();
   }
 
